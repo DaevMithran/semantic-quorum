@@ -1,0 +1,11 @@
+{
+  "boardUrl": "http://localhost:8787",
+  "chainSelectorName": "arc-testnet",
+  "chainId": 5042002,
+  "agenticCommerce": "0x0747EEf0706327138c69792bF28Cd525089e4583",
+  "sqController": "0x000000000000000000000000000000000000dEaD",
+  "gasLimit": "800000",
+  "write": false,
+  "chainChecks": false,
+  "jobSubmittedEvent": "event JobSubmitted(uint256 indexed jobId, address indexed provider, bytes32 deliverable)"
+}

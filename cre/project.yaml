@@ -1,0 +1,12 @@
+# CRE project settings (targets selected with --target).
+# local-settings: offline test against fixtures, no Arc reads, no writes.
+# arc-settings:   reads Arc testnet; writes through the CRE forwarder when config.write = true.
+local-settings:
+  rpcs:
+    - chain-name: arc-testnet
+      url: https://rpc.testnet.arc.io
+
+arc-settings:
+  rpcs:
+    - chain-name: arc-testnet
+      url: https://rpc.testnet.arc.io

@@ -1,0 +1,15 @@
+local-settings:
+  user-workflow:
+    workflow-name: "sq-verdict"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.local.json"
+    secrets-path: "../../../secrets.yaml"
+
+arc-settings:
+  user-workflow:
+    workflow-name: "sq-verdict"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.arc.json"
+    secrets-path: "../../../secrets.yaml"

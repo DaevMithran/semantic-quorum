@@ -1,0 +1,104 @@
+{
+  "1:0": {
+    "policy": "{\"version\":\"sq-policy-1\",\"criteria\":[{\"id\":\"c1\",\"statement\":\"The page shows a price list.\",\"must\":true},{\"id\":\"c2\",\"statement\":\"The tone of the page is playful.\",\"must\":false},{\"id\":\"c3\",\"statement\":\"The page mentions UPI payment.\",\"must\":true},{\"id\":\"p1\",\"statement\":\"The page shows opening hours.\",\"must\":true,\"private\":true}],\"profiles\":{\"0g-laya-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500},\"0g-vela-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500}},\"revisionLimit\":2}",
+    "snapshot": "{\"version\":\"sq-snapshot-1\",\"chainId\":5042002,\"controller\":\"0x000000000000000000000000000000000000dEaD\",\"committee\":[{\"index\":0,\"evaluatorId\":\"laya-2.judges.semanticquorum.eth\",\"profileId\":\"0g-laya-teeml-v1\",\"reportKey\":\"0x70997970C51812dc3A010C7d01b50e0d17dc79C8\",\"feeRecipient\":\"0x90F79bf6EB2c4f870365E785982E1f101E93b906\"},{\"index\":1,\"evaluatorId\":\"vela-1.judges.semanticquorum.eth\",\"profileId\":\"0g-vela-teeml-v1\",\"reportKey\":\"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC\",\"feeRecipient\":\"0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65\"}]}",
+    "reports": [
+      {
+        "evaluatorIndex": 1,
+        "evidenceHash": "0x49d58e151ecac76af51fcc173cca1925c6b66d3c3772b44b7991d4db6467e2bd",
+        "result": "{\"profileId\":\"0g-vela-teeml-v1\",\"modelVersion\":\"vela-2.0-9b\",\"requestId\":\"req-vela-1-0\",\"receiptHash\":\"0x2af7726f501064805db708cf5d7de0fd184503e9646b85fb47f2bffd6298cdea\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9200},{\"id\":\"c2\",\"passBps\":4600},{\"id\":\"c3\",\"passBps\":1100},{\"id\":\"p1\",\"passBps\":8500}],\"overall\":{\"expectedLevelBps\":5000}}",
+        "signature": "0x3c349fb76f1b29026df4172d268d542a63339a797c738e9c05a0ed4fd97fe0246986c39cfaef287fe1a547df8cf0367d9c23c539c90fe109f80e0c2103bd82251c"
+      },
+      {
+        "evaluatorIndex": 0,
+        "evidenceHash": "0x49d58e151ecac76af51fcc173cca1925c6b66d3c3772b44b7991d4db6467e2bd",
+        "result": "{\"profileId\":\"0g-laya-teeml-v1\",\"modelVersion\":\"jev-1.14.0\",\"provider\":\"jev\",\"requestId\":\"a55e5c709d8741c7-BOM\",\"receiptHash\":\"0x7015a8275b44694d73f7f91eb335e8452e8144af2a9a6df0ab8fcda861524f3f\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":1100},{\"id\":\"c3\",\"passBps\":200},{\"id\":\"p1\",\"passBps\":9800}],\"overall\":{\"expectedLevelBps\":5800}}",
+        "signature": "0x804786c557921f3fddead2c7b056d4d617c4998ed74d4e7ba68059c54f5e2ae3047ceed367b0a40dcee0ee5e35544c8879aaf9ec816afc3007e5afebccac25e91b"
+      }
+    ]
+  },
+  "1:1": {
+    "policy": "{\"version\":\"sq-policy-1\",\"criteria\":[{\"id\":\"c1\",\"statement\":\"The page shows a price list.\",\"must\":true},{\"id\":\"c2\",\"statement\":\"The tone of the page is playful.\",\"must\":false},{\"id\":\"c3\",\"statement\":\"The page mentions UPI payment.\",\"must\":true},{\"id\":\"p1\",\"statement\":\"The page shows opening hours.\",\"must\":true,\"private\":true}],\"profiles\":{\"0g-laya-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500},\"0g-vela-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500}},\"revisionLimit\":2}",
+    "snapshot": "{\"version\":\"sq-snapshot-1\",\"chainId\":5042002,\"controller\":\"0x000000000000000000000000000000000000dEaD\",\"committee\":[{\"index\":0,\"evaluatorId\":\"laya-2.judges.semanticquorum.eth\",\"profileId\":\"0g-laya-teeml-v1\",\"reportKey\":\"0x70997970C51812dc3A010C7d01b50e0d17dc79C8\",\"feeRecipient\":\"0x90F79bf6EB2c4f870365E785982E1f101E93b906\"},{\"index\":1,\"evaluatorId\":\"vela-1.judges.semanticquorum.eth\",\"profileId\":\"0g-vela-teeml-v1\",\"reportKey\":\"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC\",\"feeRecipient\":\"0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65\"}]}",
+    "reports": [
+      {
+        "evaluatorIndex": 0,
+        "evidenceHash": "0xa2a27410a35b6eb09cce94a30f843f9ff7210917cd02888f28e10f0e13a27c89",
+        "result": "{\"profileId\":\"0g-laya-teeml-v1\",\"modelVersion\":\"laya-421m\",\"requestId\":\"req-laya-1-1\",\"receiptHash\":\"0xe32b2c5d612ee6a71a6fbf22becb4518ce9181f8503ba06330c1471426b0c048\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":8100},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":8200}}",
+        "signature": "0x2e4fd1400a4ae0f5d6bb3e6e845f875d839bac5b98c23d9af47ce6984f1097136a0e73d3cdbdb07a81455f8e011766f901d2fc5a22188de6033c9916d01c04a61b"
+      },
+      {
+        "evaluatorIndex": 1,
+        "evidenceHash": "0xa2a27410a35b6eb09cce94a30f843f9ff7210917cd02888f28e10f0e13a27c89",
+        "result": "{\"profileId\":\"0g-vela-teeml-v1\",\"modelVersion\":\"vela-2.0-9b\",\"requestId\":\"req-vela-1-1\",\"receiptHash\":\"0xf36147b66f7d3d05dcb9bfc6487abd9487894ce7d6f4900161c49968b282b2f8\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":8100},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":7900}}",
+        "signature": "0xc9ab75a89172902f36a1bf77b1b1c6956977562de0dfda27001be1e89816f9b05f7f5fcd841737552fc031305d54dbe076e0c105e6dd846590ccf4fbca426c371b"
+      }
+    ]
+  },
+  "2:0": {
+    "policy": "{\"version\":\"sq-policy-1\",\"criteria\":[{\"id\":\"c1\",\"statement\":\"The page shows a price list.\",\"must\":true},{\"id\":\"c2\",\"statement\":\"The tone of the page is playful.\",\"must\":false},{\"id\":\"c3\",\"statement\":\"The page mentions UPI payment.\",\"must\":true},{\"id\":\"p1\",\"statement\":\"The page shows opening hours.\",\"must\":true,\"private\":true}],\"profiles\":{\"0g-laya-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500},\"0g-vela-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500}},\"revisionLimit\":2}",
+    "snapshot": "{\"version\":\"sq-snapshot-1\",\"chainId\":5042002,\"controller\":\"0x000000000000000000000000000000000000dEaD\",\"committee\":[{\"index\":0,\"evaluatorId\":\"laya-2.judges.semanticquorum.eth\",\"profileId\":\"0g-laya-teeml-v1\",\"reportKey\":\"0x70997970C51812dc3A010C7d01b50e0d17dc79C8\",\"feeRecipient\":\"0x90F79bf6EB2c4f870365E785982E1f101E93b906\"},{\"index\":1,\"evaluatorId\":\"vela-1.judges.semanticquorum.eth\",\"profileId\":\"0g-vela-teeml-v1\",\"reportKey\":\"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC\",\"feeRecipient\":\"0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65\"}]}",
+    "reports": [
+      {
+        "evaluatorIndex": 0,
+        "evidenceHash": "0x422d5702ec9fe4f66c971c162352c8b9b4f5237edd95f18486e2f48e8bbe52c0",
+        "result": "{\"profileId\":\"0g-laya-teeml-v1\",\"modelVersion\":\"laya-421m\",\"requestId\":\"req-laya-2-0\",\"receiptHash\":\"0x0f35ef7cbda32770f1096b507ae74cdf5b4ff18bc86cf505e91195afba64fcdf\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":8100},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":8000}}",
+        "signature": "0x318fbf6748fbc24fe798095fad40b01ad4ee47d90533dbb43c64b45cc826fdd1081474a8d627324ec8fcc2e072fd69e8305b5eff39db3754a3e80d0808080e381c"
+      },
+      {
+        "evaluatorIndex": 1,
+        "evidenceHash": "0x422d5702ec9fe4f66c971c162352c8b9b4f5237edd95f18486e2f48e8bbe52c0",
+        "result": "{\"profileId\":\"0g-vela-teeml-v1\",\"modelVersion\":\"vela-2.0-9b\",\"requestId\":\"req-vela-2-0\",\"receiptHash\":\"0xab85d2f51e37d2ff099ef9fb4f7a27de10b7cedd9e03e25049d7e18dea667613\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":3000},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":6200}}",
+        "signature": "0x8d94a981525356e6f845910df18681d4e4210921ba8f03ae09299302287873fc5e739633a8c2536cd83e4e227a9df45da758192f5fdf3bd102ca4205b4eb04661b"
+      }
+    ]
+  },
+  "3:0": {
+    "policy": "{\"version\":\"sq-policy-1\",\"criteria\":[{\"id\":\"c1\",\"statement\":\"The page shows a price list.\",\"must\":true},{\"id\":\"c2\",\"statement\":\"The tone of the page is playful.\",\"must\":false},{\"id\":\"c3\",\"statement\":\"The page mentions UPI payment.\",\"must\":true},{\"id\":\"p1\",\"statement\":\"The page shows opening hours.\",\"must\":true,\"private\":true}],\"profiles\":{\"0g-laya-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500},\"0g-vela-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500}},\"revisionLimit\":2}",
+    "snapshot": "{\"version\":\"sq-snapshot-1\",\"chainId\":5042002,\"controller\":\"0x000000000000000000000000000000000000dEaD\",\"committee\":[{\"index\":0,\"evaluatorId\":\"laya-2.judges.semanticquorum.eth\",\"profileId\":\"0g-laya-teeml-v1\",\"reportKey\":\"0x70997970C51812dc3A010C7d01b50e0d17dc79C8\",\"feeRecipient\":\"0x90F79bf6EB2c4f870365E785982E1f101E93b906\"},{\"index\":1,\"evaluatorId\":\"vela-1.judges.semanticquorum.eth\",\"profileId\":\"0g-vela-teeml-v1\",\"reportKey\":\"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC\",\"feeRecipient\":\"0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65\"}]}",
+    "reports": [
+      {
+        "evaluatorIndex": 0,
+        "evidenceHash": "0x3531a5391fee977a5dd2778ee5215c3153d1b9bad54dc6c8b5a19af77a75842c",
+        "result": "{\"profileId\":\"0g-laya-teeml-v1\",\"modelVersion\":\"laya-421m\",\"requestId\":\"req-laya-3-0\",\"receiptHash\":\"0xf64e2bf69da46c256e5eb59ab6cabad2b77632c0f396305fbbe94c2c560dd3df\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":8100},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":8000}}",
+        "signature": "0xbf7200fead44281763480273751e3a063b4f18c07c0cbc19d98a6133a04f1cb83465ffd15686f1c1b205317888801b71199379aaea95091a28aa7c5a61259f321c"
+      }
+    ]
+  },
+  "4:1": {
+    "policy": "{\"version\":\"sq-policy-1\",\"criteria\":[{\"id\":\"c1\",\"statement\":\"The page shows a price list.\",\"must\":true},{\"id\":\"c2\",\"statement\":\"The tone of the page is playful.\",\"must\":false},{\"id\":\"c3\",\"statement\":\"The page mentions UPI payment.\",\"must\":true},{\"id\":\"p1\",\"statement\":\"The page shows opening hours.\",\"must\":true,\"private\":true}],\"profiles\":{\"0g-laya-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500},\"0g-vela-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500}},\"revisionLimit\":2}",
+    "snapshot": "{\"version\":\"sq-snapshot-1\",\"chainId\":5042002,\"controller\":\"0x000000000000000000000000000000000000dEaD\",\"committee\":[{\"index\":0,\"evaluatorId\":\"laya-2.judges.semanticquorum.eth\",\"profileId\":\"0g-laya-teeml-v1\",\"reportKey\":\"0x70997970C51812dc3A010C7d01b50e0d17dc79C8\",\"feeRecipient\":\"0x90F79bf6EB2c4f870365E785982E1f101E93b906\"},{\"index\":1,\"evaluatorId\":\"vela-1.judges.semanticquorum.eth\",\"profileId\":\"0g-vela-teeml-v1\",\"reportKey\":\"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC\",\"feeRecipient\":\"0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65\"}]}",
+    "reports": [
+      {
+        "evaluatorIndex": 0,
+        "evidenceHash": "0x54451c2bbe20c8adb3d24523a19bb24c2f1fe49312159e3fd6251efcd02f6fff",
+        "result": "{\"profileId\":\"0g-laya-teeml-v1\",\"modelVersion\":\"laya-421m\",\"requestId\":\"req-laya-4-1\",\"receiptHash\":\"0xff4a2685f46778130096463ba68fadf1b0e8c311f1303abcf3bccd48569f60c0\",\"criteria\":[{\"id\":\"c1\",\"passBps\":1000},{\"id\":\"c2\",\"passBps\":900},{\"id\":\"c3\",\"passBps\":500},{\"id\":\"p1\",\"passBps\":800}],\"overall\":{\"expectedLevelBps\":1200}}",
+        "signature": "0xd3baa5c7763ffe0f60a7ba85975ab1ce6c2de7148413d72048277947b1c8f8291ca74a4e26e4d0edbb0eb03b0726441e40521293568fc570c6d2b8d2de18cc871c"
+      },
+      {
+        "evaluatorIndex": 1,
+        "evidenceHash": "0x54451c2bbe20c8adb3d24523a19bb24c2f1fe49312159e3fd6251efcd02f6fff",
+        "result": "{\"profileId\":\"0g-vela-teeml-v1\",\"modelVersion\":\"vela-2.0-9b\",\"requestId\":\"req-vela-4-1\",\"receiptHash\":\"0xaf4a7da3f10076b429740f32770c77b9d785709223d66d9ef3e044c0ffeef405\",\"criteria\":[{\"id\":\"c1\",\"passBps\":800},{\"id\":\"c2\",\"passBps\":1500},{\"id\":\"c3\",\"passBps\":400},{\"id\":\"p1\",\"passBps\":700}],\"overall\":{\"expectedLevelBps\":1000}}",
+        "signature": "0xf2f2f8dd1914f32b909c2c6a0957ce01a55e7ff9ec27c496c617a0e188e5c8805f47f71ecb19122af619d6a020afdd23eedff41ed8b85a2b900bb76238b716b51b"
+      }
+    ]
+  },
+  "5:0": {
+    "policy": "{\"version\":\"sq-policy-1\",\"criteria\":[{\"id\":\"c1\",\"statement\":\"The page shows a price list.\",\"must\":true},{\"id\":\"c2\",\"statement\":\"The tone of the page is playful.\",\"must\":false},{\"id\":\"c3\",\"statement\":\"The page mentions UPI payment.\",\"must\":true},{\"id\":\"p1\",\"statement\":\"The page shows opening hours.\",\"must\":true,\"private\":true}],\"profiles\":{\"0g-laya-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500},\"0g-vela-teeml-v1\":{\"criterionPassBps\":7000,\"overallAcceptBps\":6000,\"overallRejectBps\":2500}},\"revisionLimit\":2}",
+    "snapshot": "{\"version\":\"sq-snapshot-1\",\"chainId\":5042002,\"controller\":\"0x000000000000000000000000000000000000dEaD\",\"committee\":[{\"index\":0,\"evaluatorId\":\"laya-2.judges.semanticquorum.eth\",\"profileId\":\"0g-laya-teeml-v1\",\"reportKey\":\"0x70997970C51812dc3A010C7d01b50e0d17dc79C8\",\"feeRecipient\":\"0x90F79bf6EB2c4f870365E785982E1f101E93b906\"},{\"index\":1,\"evaluatorId\":\"vela-1.judges.semanticquorum.eth\",\"profileId\":\"0g-vela-teeml-v1\",\"reportKey\":\"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC\",\"feeRecipient\":\"0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65\"}]}",
+    "reports": [
+      {
+        "evaluatorIndex": 0,
+        "evidenceHash": "0xbd513927ab2ca82d0baa49b79b795d78f88a6a7705d14173643db3dc4c564c1e",
+        "result": "{\"profileId\":\"0g-laya-teeml-v1\",\"modelVersion\":\"laya-421m\",\"requestId\":\"req-laya-5-0\",\"receiptHash\":\"0xad76ad549f80fb990a272e044eefd2f7bdf52c7bbb66afe71bf4e1ca9e2176fd\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":8100},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":8000}}",
+        "signature": "0x81c172a4763a8b044c93f06454627bc90fb001488044a397f709cabca94f1aa20259ddcca112d3d30675bcd9c2c47b10836f3f0fddaea6b86f33f281cad8bcfd1b"
+      },
+      {
+        "evaluatorIndex": 1,
+        "evidenceHash": "0xbd513927ab2ca82d0baa49b79b795d78f88a6a7705d14173643db3dc4c564c1e",
+        "result": "{\"profileId\":\"0g-vela-teeml-v1\",\"modelVersion\":\"vela-2.0-9b\",\"requestId\":\"req-vela-5-0\",\"receiptHash\":\"0xdfc3c65b4a320c5fd7c91ac4e2bb11146198ea4f598b73852bf69414da161cdb\",\"criteria\":[{\"id\":\"c1\",\"passBps\":9300},{\"id\":\"c2\",\"passBps\":8100},{\"id\":\"c3\",\"passBps\":9000},{\"id\":\"p1\",\"passBps\":8800}],\"overall\":{\"expectedLevelBps\":8000}}",
+        "signature": "0xf7b77f47ab7e16d0c1d77dbb7d88f5522a2366059311f3549e88911862a5ec8126fc7b5fa81fb59cfe1c1a953b92ac6d7d983d5f95615fc31cdba1a23c27c30a1b"
+      }
+    ]
+  }
+}

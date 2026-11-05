@@ -1,0 +1,21 @@
+{
+  "name": "semantic-quorum-cre",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fixtures": "bun run tools/make-fixtures.ts",
+    "board": "bun run tools/report-board.ts",
+    "test": "bun test tools",
+    "typecheck": "tsc",
+    "compile": "bun x cre-compile src/workflows/sq-verdict/main.ts dist/sq-verdict.wasm"
+  },
+  "dependencies": {
+    "@chainlink/cre-sdk": "1.23.0",
+    "viem": "2.34.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
+  "engines": { "bun": ">=1.2.21" }
+}

@@ -1,0 +1,35 @@
+# secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# dependencies and builds
+node_modules/
+dist/
+contracts/out/
+contracts/cache/
+cache/
+broadcast/
+
+# local logs
+console.jsonl
+*.log
+.DS_Store
+
+# installed agent skills (reinstall from skills-lock.json)
+.agents/
+
+# editors and local agent/tool state
+.vscode/
+.idea/
+.cursor/
+.claude/
+.zed/
+*.swp
+
+# misc build and tool output
+*.tsbuildinfo
+coverage/
+.cre/
