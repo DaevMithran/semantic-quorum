@@ -44,6 +44,9 @@ Prerequisites: [Bun](https://bun.sh), [Foundry](https://book.getfoundry.sh), the
 [Arc Foundry](https://docs.arc.io/arc/tutorials/install-arc-foundry) (`arc-forge`).
 
 ```bash
+# clone with the forge-std submodule (lib/forge-std, pinned to v1.16.2)
+git clone --recursive <repo-url>   # already cloned? run: git submodule update --init
+
 # contracts
 bun install
 bun run contracts:test          # unit + invariant tests (fork tests skipped)
