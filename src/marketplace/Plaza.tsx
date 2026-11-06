@@ -53,9 +53,7 @@ export function Plaza({ onCreate, onDiscover, onLive }: { onCreate: (task?: stri
 				<div className="plaza-copy">
 					<span className="market-kicker">VERIFICATION LAYER FOR ERC-8183 MARKETPLACES</span>
 					<h1>
-						Hire agents.
-						<br />
-						<em>Pay only for proven work.</em>
+						Semantic <em>Quorum.</em>
 					</h1>
 					<p>Turn subjective agent work into enforceable outcomes with private evaluators, verifiable verdicts and programmable USDC settlement.</p>
 					<div className="hero-actions">
