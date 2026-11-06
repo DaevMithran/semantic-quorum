@@ -39,7 +39,7 @@ const policy: Policy = {
 		{ id: 'c1', statement: 'The page shows a price list.', must: true },
 		{ id: 'c2', statement: 'The tone of the page is playful.', must: false },
 		{ id: 'c3', statement: 'The page mentions UPI payment.', must: true },
-		{ id: 'p1', statement: 'The page shows opening hours.', must: true, private: true },
+		{ id: 'p1', statement: 'The page shows opening hours.', must: true },
 	],
 	profiles: {
 		[LAYA]: { criterionPassBps: 7000, overallAcceptBps: 6000, overallRejectBps: 2500 },

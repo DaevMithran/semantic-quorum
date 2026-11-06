@@ -17,7 +17,10 @@ aggregates their signed reports; `SQController` on Arc acts as the evaluator for
   Arc fork tests in `contracts/test-integration`.
 - `cre/`: Chainlink CRE verdict workflow and the shared protocol code (`cre/src/protocol`).
 - `services/evaluator/`: decision-model evaluator (Jev in dev, 0G in the demo).
-- `services/seller/`, `services/coordinator/`, `scripts/ens/`: planned.
+- `services/seller/`: Page Agent; `services/contract-agent/`: Circle/Arc contract artifacts;
+  `services/0g-agent/`: 0G project scaffolds; `services/failure-agent/`: deterministic refund demo;
+  `services/coordinator/`: marketplace routing and rounds.
+- `scripts/ens/`: planned.
 - `src/`: jury-board frontend (React, Vite, wagmi, viem, ConnectKit) on Arc Testnet (5042002).
 - USDC on Arc: ERC-20 view `0x3600000000000000000000000000000000000000`, 6 decimals. Never use the 18-decimal native view for amounts.
 

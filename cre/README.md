@@ -81,5 +81,5 @@ For the final phase, replace `submitTxHash` in the payload with the real `Agenti
   `policyHash` and `participantSnapshotHash`, so a verdict built against another policy or committee
   fails onchain.
 - `reportsHash` is keccak256 of the ABI-encoded report signature hashes in committee order;
-  `deficiencyHash` is keccak256 of the ranked deficiency JSON.
+  `deficiencyHash` is keccak256 of the scorecard JSON: every rubric row in order plus overall, each judge's score against its own threshold (the seller revises from it).
 - The fixture keys in `tools/make-fixtures.ts` are well-known public test keys. Never fund them on a real network.

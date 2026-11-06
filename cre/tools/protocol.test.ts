@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { type Address, encodeAbiParameters, type Hex, hashTypedData, keccak256, toBytes } from 'viem'
-import { decide, voteFor } from '../src/protocol/rules.ts'
+import { checkPolicy, decide, scorecard, voteFor } from '../src/protocol/rules.ts'
 import { type EvaluationResult, type Policy, verdictDomain, verdictTypes } from '../src/protocol/types.ts'
 
 const LAYA = '0g-laya-teeml-v1'
@@ -11,7 +11,7 @@ const policy: Policy = {
 	criteria: [
 		{ id: 'c1', statement: 'price list', must: true },
 		{ id: 'c2', statement: 'playful', must: false },
-		{ id: 'p1', statement: 'opening hours', must: true, private: true },
+		{ id: 'p1', statement: 'opening hours', must: true },
 	],
 	profiles: { [LAYA]: t, [VELA]: t },
 	revisionLimit: 2,
@@ -38,9 +38,8 @@ describe('vote', () => {
 	test('overall below reject threshold -> REJECT', () => {
 		expect(voteFor(0, r(LAYA, 9000, 9000, 9000, 2000), policy, 1).vote).toBe('REJECT')
 	})
-	test('private-check failure in round 0 never REJECTs', () => {
-		expect(voteFor(0, r(LAYA, 9000, 9000, 1000, 2000), policy, 0).vote).toBe('REVISE')
-		expect(voteFor(0, r(LAYA, 9000, 9000, 1000, 2000), policy, 1).vote).toBe('REJECT')
+	test('very low overall REJECTs in any round, including the first', () => {
+		expect(voteFor(0, r(LAYA, 9000, 9000, 1000, 2000), policy, 0).vote).toBe('REJECT')
 	})
 	test('rejects non-integer or out-of-range bps', () => {
 		expect(() => voteFor(0, r(LAYA, 9000.5, 9000, 9000, 8000), policy, 0)).toThrow()
@@ -64,7 +63,50 @@ describe('committee', () => {
 		expect(d.deficiencies).toEqual([
 			{ criterionId: 'c1', gapBps: 6000 },
 			{ criterionId: 'c2', gapBps: 5000 },
+			{ criterionId: 'overall', gapBps: 1000 },
 		])
+	})
+	test('low overall with every criterion passing is still reported', () => {
+		const d = decide([v(0, LAYA, 9000, 9000, 9000, 5000), v(1, VELA, 9000, 9000, 9000, 8000)])
+		expect(d.kind).toBe('REVISE')
+		expect(d.deficiencies).toEqual([{ criterionId: 'overall', gapBps: 1000 }])
+	})
+})
+
+describe('scorecard', () => {
+	test('every rubric row in order, then overall, with each judge against its own threshold', () => {
+		const card = scorecard(policy, [
+			{ evaluatorIndex: 0, result: r(LAYA, 1500, 9000, 600, 6200) },
+			{ evaluatorIndex: 1, result: r(VELA, 9960, 9800, 100, 7500) },
+		], 1, 'REVISE')
+		expect(card.rows.map((x) => x.id)).toEqual(['c1', 'c2', 'p1', 'overall'])
+		const c1 = card.rows[0]!
+		expect(c1.scores.map((s) => [s.bps, s.needBps, s.pass])).toEqual([[1500, 7000, false], [9960, 7000, true]])
+		expect(c1.pass).toBe(false)
+		expect(card.rows[1]!.pass).toBe(true)
+		expect(card.rows[3]!.scores.map((s) => s.pass)).toEqual([true, true])
+	})
+})
+
+describe('rubric limits', () => {
+	test('valid policy passes', () => expect(checkPolicy(policy)).toEqual([]))
+	test('too many criteria, duplicates, reserved id, bad thresholds', () => {
+		const bad: Policy = {
+			...policy,
+			criteria: [
+				...Array.from({ length: 6 }, (_, i) => ({ id: `c${i}`, statement: 'x', must: true })),
+				{ id: 'c0', statement: 'dup', must: true },
+				{ id: 'overall', statement: 'y', must: true },
+			],
+			profiles: { [LAYA]: { criterionPassBps: 7000, overallAcceptBps: 5000, overallRejectBps: 6000 } },
+		}
+		const e = checkPolicy(bad).join(' | ')
+		for (const want of ['at most 6 criteria', 'duplicate criterion id "c0"', 'reserved', 'overallRejectBps must be below']) {
+			expect(e).toContain(want)
+		}
+	})
+	test('statement too long', () => {
+		expect(checkPolicy({ ...policy, criteria: [{ id: 'c1', statement: 'x'.repeat(161), must: true }] }).join()).toContain('longer than 160')
 	})
 })
 

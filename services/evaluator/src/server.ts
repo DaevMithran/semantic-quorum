@@ -25,6 +25,9 @@ Bun.serve({
 				reportKey: svc.address,
 				provider: cfg.provider,
 				model: cfg.modelId,
+				chainId: cfg.chainId,
+				controller: cfg.controller,
+				requireTee: cfg.requireTee,
 			})
 		}
 		if (req.method === 'POST' && url.pathname === '/evaluate') {
@@ -45,4 +48,4 @@ Bun.serve({
 	},
 })
 
-console.log(`evaluator ${cfg.evaluatorId} (${cfg.profileId}) on :${cfg.port}, provider ${cfg.provider} ${cfg.baseUrl}${cfg.path}, model ${cfg.modelId}, report key ${svc.address}`)
+console.log(`evaluator ${cfg.evaluatorId} (${cfg.profileId}) on :${cfg.port}, chain ${cfg.chainId}, controller ${cfg.controller}, provider ${cfg.provider} ${cfg.baseUrl}${cfg.path}, model ${cfg.modelId}, report key ${svc.address}`)

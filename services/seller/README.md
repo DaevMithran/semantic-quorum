@@ -1,12 +1,14 @@
-# Seller agent (planned)
+# Seller agent
 
-0G seller agent. Writes the deliverable (one self-contained HTML page) from the buyer's brief using a
-Private TEE chat model on 0G, and repairs it on REVISE using the failed criteria (ranked by gap), the
-revealed private check and any Vela spans.
+Writes the deliverable with `0GM-1.0-35B-A3B` on 0G Private Computer (TEE providers only), sends it to the
+coordinator as a round, revises from the judges' scorecard (every check, each judge's score against what it needs), and on `PASS` submits it on Arc
+(`AgenticCommerce.submit`), then triggers the final round.
 
-- Builds the evidence bundle and its hash: brief, rubric, HTML and visible-text hashes, attempt number,
-  and its own 0G request IDs and receipt hashes.
-- **Submits on Arc only after CRE returns PASS for that exact evidence hash. Submitting is final.**
-- Enforces a per-job cap on 0G calls.
+```bash
+cp .env.example .env   # fill SELLER_LLM_API_KEY (and SELLER_KEY + SUBMIT=arc for Arc)
+bun install
+bun run src/main.ts <jobId>
+```
 
-See `../../docs/` and the 0G integration plan.
+The evidence hash binds the page to the 0G request that wrote it (html hash, model, request ID, receipt hash).
+`SELLER_MAX_ROUNDS` caps model calls per job.

@@ -50,8 +50,7 @@ import {
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { z } from 'zod'
-import { decide } from '../../protocol/rules.ts'
-import { voteFor } from '../../protocol/rules.ts'
+import { checkPolicy, decide, scorecard, voteFor } from '../../protocol/rules.ts'
 import {
 	type BoardBundle,
 	type EvaluationResult,
@@ -217,6 +216,8 @@ const onTrigger = async (runtime: Runtime<Config>, trigger: HTTPPayload): Promis
 	const body = new HTTPClient().sendRequest(runtime, fetchBundle, consensusIdenticalAggregation())(url).result()
 	const bundle = JSON.parse(body) as BoardBundle
 	const policy = JSON.parse(bundle.policy) as Policy
+	const policyErrors = checkPolicy(policy)
+	if (policyErrors.length) throw new Error(`invalid policy: ${policyErrors.join('; ')}`)
 	const snapshot = JSON.parse(bundle.snapshot) as Snapshot
 	const policyHash = hashText(bundle.policy)
 	const participantSnapshotHash = hashText(bundle.snapshot)
@@ -296,6 +297,7 @@ const onTrigger = async (runtime: Runtime<Config>, trigger: HTTPPayload): Promis
 				instruction: 'seller may now submit this evidenceHash; then trigger the final phase with submitTxHash',
 				evidenceHash,
 				deficiencies: decision.deficiencies,
+				scorecard: scorecard(policy, valid.map((v) => ({ evaluatorIndex: v.index, result: v.result })), input.round, 'ACCEPT'),
 				votes,
 			})
 		}
@@ -318,7 +320,9 @@ const onTrigger = async (runtime: Runtime<Config>, trigger: HTTPPayload): Promis
 	const reportsHash = keccak256(
 		encodeAbiParameters([{ type: 'bytes32[]' }], [valid.map((v) => v.digestHash)]),
 	)
-	const deficiencyHash = hashText(JSON.stringify(decision.deficiencies))
+	// The verdict commits to the full scorecard the seller revises from (field name kept for the contract).
+	const card = scorecard(policy, valid.map((v) => ({ evaluatorIndex: v.index, result: v.result })), input.round, kind)
+	const deficiencyHash = hashText(JSON.stringify(card))
 	const includedMask = valid.reduce((m, v) => m | (1n << BigInt(v.index)), 0n)
 
 	const verdict: VerdictMessage = {
@@ -351,6 +355,7 @@ const onTrigger = async (runtime: Runtime<Config>, trigger: HTTPPayload): Promis
 		policyHash,
 		participantSnapshotHash,
 		deficiencies: decision.deficiencies,
+		scorecard: card,
 		votes,
 		relay: 'call SQController.submitVerdict(verdict, signature) if not written by CRE',
 	}

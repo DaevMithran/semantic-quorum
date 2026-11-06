@@ -29,7 +29,14 @@ export const makeService = (cfg: Config, deps: ServiceDeps = {}) => {
 	const f = deps.fetchImpl ?? fetch
 	const client =
 		deps.client ??
-		new DecisionsClient({ baseUrl: cfg.baseUrl, path: cfg.path, apiKey: cfg.apiKey, fetchImpl: deps.fetchImpl })
+		new DecisionsClient({
+			baseUrl: cfg.baseUrl,
+			path: cfg.path,
+			apiKey: cfg.apiKey,
+			fetchImpl: deps.fetchImpl,
+			extraHeaders: cfg.extraHeaders,
+			extraBody: cfg.extraBody,
+		})
 	const me = privateKeyToAccount(cfg.reportKey).address
 	const isVela = cfg.profileId.includes('vela')
 
@@ -72,6 +79,10 @@ export const makeService = (cfg: Config, deps: ServiceDeps = {}) => {
 			enableSpans: cfg.enableSpans && isVela,
 		})
 
+		if (cfg.requireTee && call.teeVerified !== true) {
+			throw new Error(`TEE_NOT_VERIFIED: provider returned tee_verified=${String(call.teeVerified)}`)
+		}
+
 		// 5. Sign and publish
 		const report: BoardReport = await signReport({
 			reportKey: cfg.reportKey,
@@ -96,6 +107,7 @@ export const makeService = (cfg: Config, deps: ServiceDeps = {}) => {
 			provider: cfg.provider,
 			requestId: call.requestId,
 			attestation: call.attestation ?? null,
+			teeVerified: call.teeVerified ?? null,
 			latencyMs: call.latencyMs,
 			result,
 			signature: report.signature,

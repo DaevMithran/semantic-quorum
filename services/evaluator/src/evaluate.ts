@@ -89,6 +89,7 @@ export const evaluate = async (client: DecisionsClient, input: EvaluateInput): P
 		provider: input.provider,
 		requestId: call.requestId,
 		receiptHash: call.receiptHash,
+		...(call.teeVerified !== undefined ? { teeVerified: call.teeVerified } : {}),
 		criteria,
 		overall: { expectedLevelBps: overallBps },
 		...(spans && spans.length ? { spans } : {}),

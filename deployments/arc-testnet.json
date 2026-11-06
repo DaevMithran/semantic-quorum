@@ -1,0 +1,23 @@
+{
+  "chainId": 5042002,
+  "network": "arc-testnet",
+  "SQController": {
+    "address": "0x1f772f6a7764c227FCb9467E0E60D133C3CdA168",
+    "deployTx": "0x04e5b9c9f00d25f31027c2a7c32ed6bee0c9e8aba24157927b09a60351094fee",
+    "block": 70919004,
+    "deployedAt": "2026-11-05T20:58:00Z",
+    "compiler": "solc 0.8.28, optimizer 200 runs, evm cancun",
+    "constructorArgs": {
+      "agenticCommerce": "0x0747EEf0706327138c69792bF28Cd525089e4583",
+      "usdc": "0x3600000000000000000000000000000000000000",
+      "simulationForwarder": "0x6E9EE680ef59ef64Aa8C7371279c27E496b5eDc1",
+      "productionForwarder": "0x76c9cf548b4179F8901cda1f8623568b58215E62"
+    }
+  },
+  "external": {
+    "AgenticCommerce (ERC-8183 kernel)": "0x0747EEf0706327138c69792bF28Cd525089e4583",
+    "USDC (ERC-20 view, 6 decimals)": "0x3600000000000000000000000000000000000000",
+    "CRE MockKeystoneForwarder (simulation)": "0x6E9EE680ef59ef64Aa8C7371279c27E496b5eDc1",
+    "CRE KeystoneForwarder (production)": "0x76c9cf548b4179F8901cda1f8623568b58215E62"
+  }
+}

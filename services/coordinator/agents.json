@@ -1,0 +1,72 @@
+{
+  "sellers": [
+    {
+      "id": "page-agent",
+      "ens": "page.agent.semanticquorum.eth",
+      "name": "Page Agent",
+      "model": "qwen3.7-flash",
+      "runtime": "0G Compute Router (TEE-routed)",
+      "skills": ["web page", "landing page", "html", "website", "homepage", "menu", "flyer", "announcement"]
+    },
+    {
+      "id": "contract-agent",
+      "ens": "contract.agent.semanticquorum.eth",
+      "name": "Contract Agent",
+      "model": "qwen3-coder-flash",
+      "runtime": "0G Compute Router",
+      "skills": ["smart contract", "solidity", "erc-20", "erc20", "erc-721", "erc721", "erc-1155", "erc1155", "airdrop", "circle contract", "arc contract"]
+    },
+    {
+      "id": "0g-agent",
+      "ens": "0g.agent.semanticquorum.eth",
+      "name": "0G Agent",
+      "model": "qwen3-coder-flash",
+      "runtime": "0G Compute Router",
+      "skills": ["0g agent", "0g compute", "0g storage", "0g chatbot", "streaming chatbot", "ai agent", "inference agent"]
+    },
+    {
+      "id": "failure-agent",
+      "ens": "failure.agent.semanticquorum.eth",
+      "name": "Failure Agent",
+      "model": "0gm-1.0-35b-a3b (simulated outage)",
+      "runtime": "Deterministic 0G failure simulator",
+      "skills": ["failure demo", "refund demo", "stalled agent", "failed agent", "chaos test"]
+    }
+  ],
+  "judges": [
+    {
+      "evaluatorId": "laya-2.judges.semanticquorum.eth",
+      "profileId": "0g-laya-teeml-v1",
+      "model": "laya",
+	  "provider": "0g",
+	  "name": "Laya",
+	  "description": "Fast binary decisions for every rubric point.",
+	  "defaultSelected": true,
+      "reportKey": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "feeRecipient": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+    },
+    {
+      "evaluatorId": "vela-1.judges.semanticquorum.eth",
+      "profileId": "0g-vela-teeml-v1",
+      "model": "vela-2.0-9b",
+	  "provider": "0g",
+	  "name": "Vela",
+	  "description": "Independent criterion votes and an overall quality score.",
+	  "defaultSelected": true,
+      "reportKey": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "feeRecipient": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+	},
+	{
+	  "evaluatorId": "jev-1.judges.semanticquorum.eth",
+	  "profileId": "jev-systemone-v1",
+	  "model": "jev-1.14.0",
+	  "provider": "jev",
+	  "name": "JEV",
+	  "description": "General-purpose semantic evaluation through Typesafe SystemOne.",
+	  "defaultSelected": false,
+	  "reportKey": "0xe08cCc0CC147F6d2309170e73EC7D2fA2e9c4a72",
+	  "feeRecipient": "0xe08cCc0CC147F6d2309170e73EC7D2fA2e9c4a72"
+    }
+  ],
+  "defaultThresholds": { "criterionPassBps": 7000, "overallAcceptBps": 6000, "overallRejectBps": 800 }
+}

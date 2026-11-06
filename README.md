@@ -13,15 +13,20 @@ on 0G before payment, and when the work falls short the agent gets precise fixes
 
 Built with [Arc Studio](https://studio.arc.io).
 
+**Arc testnet:** `SQController` at [`0x1f772f6a7764c227FCb9467E0E60D133C3CdA168`](https://explorer.testnet.arc.io/address/0x1f772f6a7764c227FCb9467E0E60D133C3CdA168).
+
 ## Repo layout
 
 | Path | What | Status |
 |---|---|---|
-| `contracts/` | `SQController` + interfaces, unit/invariant tests, Arc fork tests | Done, 325 tests passing; not yet deployed |
+| `contracts/` | `SQController` + interfaces, unit/invariant tests, Arc fork tests | Done, 325 tests passing; **deployed on Arc testnet** (see `deployments/arc-testnet.json`) |
 | `cre/` | Chainlink CRE verdict workflow + shared protocol code (`cre/src/protocol`) | Done; simulates locally |
-| `services/evaluator/` | Decision-model evaluator: scores, signs and posts reports | Done; runs on Jev in dev, 0G for the demo |
-| `services/seller/` | 0G seller agent | Planned |
-| `services/coordinator/` | Report board, CRE trigger, Arc watcher, relay fallback | Planned |
+| `services/evaluator/` | Decision-model evaluator: scores, signs and posts reports | Done; one-line switch between 0G (TEE) and Jev (dev fallback) |
+| `services/seller/` | Page Agent: writes a compact landing page on 0G, revises, submits on PASS | Done; tested with mocks |
+| `services/contract-agent/` | Contract Agent: loads Circle/Arc skills and creates a reviewable contract artifact; never deploys autonomously | Done; tested with mocks |
+| `services/0g-agent/` | 0G Agent: loads official 0G agent skills and creates a reviewable project scaffold; never funds or deploys autonomously | Done; tested with mocks |
+| `services/coordinator/` | Report board, round runner (judges → CRE), relay to Arc, event log | Done; runs the full loop locally |
+| `scripts/arc-job.ts` | Creates, funds and registers one real job on Arc testnet for the CRE forwarder path | Done |
 | `scripts/ens/` | ENSv2 identities on Sepolia | Planned |
 | `src/` | Jury-board frontend | Starter app |
 | `docs/semantic-quorum.md` | Contract design, trust assumptions, known limitations | |
@@ -30,7 +35,7 @@ Built with [Arc Studio](https://studio.arc.io).
 
 1. The buyer creates a job on `AgenticCommerce` with `SQController` as evaluator, funds it and registers it
    (rubric hash, committee of two judges drawn from a pool, fee deposit, revision limit, deadline).
-2. The seller agent writes the work on 0G.
+2. The coordinator selects Page Agent, Contract Agent, or 0G Agent by capability; the selected worker writes the work on 0G.
 3. Laya and Vela score it on 0G and sign reports.
 4. CRE verifies the reports and decides. REVISE is recorded on Arc and the seller tries again; on PASS the
    seller submits that exact version (submitting is final).
@@ -42,6 +47,28 @@ Built with [Arc Studio](https://studio.arc.io).
 Prerequisites: [Bun](https://bun.sh), [Foundry](https://book.getfoundry.sh), the
 [CRE CLI](https://docs.chain.link/cre) (`cre login`), and for fork tests
 [Arc Foundry](https://docs.arc.io/arc/tutorials/install-arc-foundry) (`arc-forge`).
+
+**Quick start (Makefile):**
+
+```bash
+make install        # all dependencies
+make env            # create missing .env files from the examples, then fill them in
+make test           # every test suite (contracts need Foundry)
+make dev            # coordinator :8787 + laya judge :8801 + vela judge :8802 (Ctrl-C stops all)
+make round-revise   # in another terminal: expect REVISE (no UPI on the page)
+make round-pass     # expect PASS
+
+# on Arc testnet: CRE writes verdicts through the CRE forwarder (no relay)
+make dev-arc                 # same stack, pointed at the deployed SQController
+make arc-job                 # 1st run: makes dev wallets in .env.arc and prints what to fund; 2nd run: job N
+make round-revise JOB=N      # REVISE lands on Arc via the forwarder
+make seller JOB=N            # seller agent on 0G: write → revise → submit on PASS → ACCEPT
+```
+
+**Judges' provider:** `DECISIONS_PROVIDER=0g` or `jev` in `services/evaluator/.env` switches both judges
+(keys and models stay in the file). The demo uses `0g`; Jev is the fallback while 0G is unavailable.
+
+**Step by step:**
 
 ```bash
 # clone with the forge-std submodule (lib/forge-std, pinned to v1.16.2)
@@ -57,9 +84,29 @@ cd cre && bun install && bun test tools && bun run fixtures && bun run board
 
 # evaluator (see services/evaluator/README.md)
 cd services/evaluator && bun install && cp .env.example .env && bun test && bun run start
+
+# coordinator: runs a whole round (see services/coordinator/README.md)
+cd services/coordinator && bun install && cp .env.example .env && bun test && bun run start
 ```
 
 Each folder with secrets has a `.env.example`. Real `.env` files are git-ignored; never commit keys.
+
+## Deploy to Arc testnet
+
+Plain Foundry; no Arc Studio needed for deployment.
+
+```bash
+curl -L https://foundry.paradigm.xyz | bash && foundryup   # if Foundry isn't installed
+cast wallet import sq-deployer --interactive               # encrypted keystore; never pass keys as flags
+# fund that address with testnet USDC (gas on Arc is USDC): https://faucet.circle.com
+make deploy
+```
+
+`contracts/script/DeploySQController.s.sol` deploys against Arc's `AgenticCommerce` (`0x0747…4583`), USDC
+(`0x3600…0000`) and the CRE forwarders (simulation `0x6E9E…eDc1`, production `0x76c9…5E62`), and refuses to run on
+any chain other than Arc testnet (5042002). Afterwards, put the printed address in
+`cre/src/workflows/sq-verdict/config.arc.json` (`sqController`) and `services/coordinator/.env`
+(`SQ_CONTROLLER_ADDRESS`).
 
 ## Trust assumptions
 

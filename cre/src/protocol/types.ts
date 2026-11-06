@@ -12,10 +12,7 @@ export type Criterion = {
 	id: string
 	statement: string // atomic yes/no statement
 	must: boolean
-	private?: boolean // announced private acceptance check, revealed after round 0
-	// 'contains' (default): satisfied if any part of the work satisfies it (best chunk wins).
-	// 'never': violated if any part violates it (worst chunk wins).
-	polarity?: 'contains' | 'never'
+	// Phrase prohibitions so that "true" is the good outcome: "The page does not ask for a card number."
 }
 
 export type ProfileThresholds = {
@@ -59,6 +56,7 @@ export type EvaluationResult = {
 	provider?: string // '0g' in production; 'jev' or 'local' marks dev scores
 	requestId: string // 0G request ID
 	receiptHash: Hex // hash of the raw 0G response/receipt
+	teeVerified?: boolean // 0G: router's TEE signature check for this inference
 	criteria: { id: string; passBps: number }[]
 	overall: { expectedLevelBps: number } // poor..excellent mapped to 0..10000
 	spans?: { start: number; end: number; label: string; criterionId?: string }[]

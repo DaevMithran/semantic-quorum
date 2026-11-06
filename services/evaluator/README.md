@@ -5,18 +5,21 @@ report and posts it to the report board, where the CRE workflow picks it up.
 
 One codebase, one process per pool member (`laya-1..3`, `vela-1..3`).
 
-## Providers: swap with config only
+## Providers: one-line switch
 
 The decisions API uses the TypeSafe Jev request shape (a `state` plus typed `questions`). 0G's Laya and
-Vela use the same shape, so switching provider means changing four env vars:
+Vela use the same shape. Set `DECISIONS_PROVIDER` in `.env`; each provider keeps its own key and model:
 
-| Provider | `DECISIONS_BASE_URL` | `DECISIONS_PATH` | Notes |
+| `DECISIONS_PROVIDER` | Endpoint (preset) | Key / model vars | Notes |
 |---|---|---|---|
-| `jev` (dev now) | `https://api.typesafe.ai` | `/v1/systemone` | model `jev-1.14.0`; Jev API key; scores labelled `provider: "jev"` |
-| `0g` (demo) | `https://router-api.0g.ai` | `/v1/decisions` (confirm) | Private-mode key; model IDs from `GET /v1/models` |
-| `local` | `http://127.0.0.1:8000` | `/v1/systemone` | `laya-server` on your Mac, no key |
+| `0g` (demo) | `https://router-api.0g.ai/v1/decisions` | `OG_API_KEY`, `OG_MODEL` (`laya`; Vela: `vela-2.0-9b` in `.env.vela`) | Sends `X-0G-Provider-Trust-Mode: private` and `verify_tee: true` |
+| `jev` (dev fallback) | `https://api.typesafe.ai/v1/systemone` | `JEV_API_KEY`, `JEV_MODEL` (`jev-1.14.0`) | Scores labelled `provider: "jev"` |
+| `local` | `http://127.0.0.1:8000/v1/systemone` | none | `laya-server` on your Mac |
 
-Get the model ID with `curl -s $DECISIONS_BASE_URL/v1/models -H "Authorization: Bearer $KEY"`.
+`DECISIONS_BASE_URL`, `DECISIONS_PATH`, `DECISIONS_API_KEY` and `DECISIONS_MODEL_ID` still override the preset.
+
+**TEE check (0G):** the router's `tee_verified` result is recorded in each signed report. `REQUIRE_TEE=true`
+makes the evaluator refuse to report unless it is `true`; turn it on once a real response has confirmed the field.
 
 **The demo and prize submission must use `0g`.** Dev scores carry `provider: "jev"` or `"local"` in every
 report so they can never be mistaken for 0G output.
@@ -55,7 +58,7 @@ evaluator must be the committee member at `evaluatorIndex`.
 4. One decisions call: a `noul` question per criterion, one `score` question over Poor/Fair/Good/Excellent,
    and (Vela on 0G, `ENABLE_SPANS=true`) a `span` question.
 5. Maps the answers to integers: `passBps = round(noul × 10000)`, `expectedLevelBps = round(score ÷ 3 × 10000)`.
-   Records the provider request ID, a hash of the raw response (`receiptHash`) and any attestation header.
+   Records the provider request ID, a hash of the raw response (`receiptHash`), any attestation header and (0G) `tee_verified`.
 6. Signs the EIP-712 `EvaluatorReport` and posts it to the board.
 
 **Why it signs:** the provider's receipt shows *which model ran*; the signature shows *which judge vouches

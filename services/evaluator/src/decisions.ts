@@ -27,6 +27,7 @@ export type DecisionsResult = {
 	requestId: string // provider request ID (header or body); 'unknown:<receiptHash>' if none
 	receiptHash: Hex // keccak256 of the raw response body
 	attestation?: string // TEE signature / attestation if the provider returns one
+	teeVerified?: boolean // 0G: `tee_verified` from the response (requested with verify_tee)
 	latencyMs: number
 }
 
@@ -36,6 +37,8 @@ export type ClientOptions = {
 	apiKey: string
 	timeoutMs?: number
 	fetchImpl?: typeof fetch
+	extraHeaders?: Record<string, string> // e.g. 0G: X-0G-Provider-Trust-Mode: private
+	extraBody?: Record<string, unknown> // e.g. 0G: verify_tee: true
 }
 
 const REQUEST_ID_HEADERS = ['x-request-id', 'request-id', 'x-0g-request-id', 'openai-request-id', 'cf-ray']
@@ -52,8 +55,9 @@ export class DecisionsClient {
 			headers: {
 				'content-type': 'application/json',
 				...(this.opts.apiKey ? { authorization: `Bearer ${this.opts.apiKey}` } : {}),
+				...(this.opts.extraHeaders ?? {}),
 			},
-			body: JSON.stringify(req),
+			body: JSON.stringify({ ...req, ...(this.opts.extraBody ?? {}) }),
 			signal: AbortSignal.timeout(this.opts.timeoutMs ?? 30_000),
 		})
 		const raw = await res.text()
@@ -76,12 +80,25 @@ export class DecisionsClient {
 			ATTESTATION_HEADERS.map((h) => res.headers.get(h)).find(Boolean) ??
 			([body.signature, body.attestation].find((v) => typeof v === 'string') as string | undefined)
 
+		const tee = findKey(body, 'tee_verified')
 		return {
 			reply,
 			requestId: headerId ?? bodyId ?? `unknown:${receiptHash.slice(2, 18)}`,
 			receiptHash,
 			attestation,
+			teeVerified: typeof tee === 'boolean' ? tee : undefined,
 			latencyMs,
 		}
 	}
+}
+
+/** Depth-first search for a key anywhere in a JSON value (0G nests TEE info in a trace object). */
+const findKey = (v: unknown, key: string, depth = 0): unknown => {
+	if (!v || typeof v !== 'object' || depth > 5) return undefined
+	if (key in (v as Record<string, unknown>)) return (v as Record<string, unknown>)[key]
+	for (const child of Object.values(v as Record<string, unknown>)) {
+		const found = findKey(child, key, depth + 1)
+		if (found !== undefined) return found
+	}
+	return undefined
 }

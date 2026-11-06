@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+!.env.*.example
 *.pem
 *.key
 
@@ -20,6 +21,7 @@ console.jsonl
 
 # installed agent skills (reinstall from skills-lock.json)
 .agents/
+.0g-skills/
 
 # editors and local agent/tool state
 .vscode/
