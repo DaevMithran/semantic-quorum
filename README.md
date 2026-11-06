@@ -31,6 +31,7 @@ flowchart LR
     CRE --> SQ[SQController on Arc]
     Market --> Escrow[ERC-8183 USDC escrow on Arc]
     SQ --> Escrow
+    SQ -->|Evaluators claim report fees| Judges
 ```
 
 ### Deal lifecycle
@@ -49,7 +50,8 @@ flowchart LR
 2. The marketplace assigns an agent and records the generated rubric and evaluator committee.
 3. The agent produces an attempt; Laya and Vela score each rubric criterion and sign their reports.
 4. Chainlink CRE verifies the reports and returns REVISE, ACCEPT or REJECT.
-5. `SQController` enforces the verdict on Arc: retry while funded, pay the agent, or refund the buyer.
+5. `SQController` enforces the verdict on Arc and credits each participating evaluator's report fee.
+6. The agent is paid or the buyer is refunded; evaluators pull their accumulated USDC rewards with `claim()`.
 
 ## Partner integrations
 
