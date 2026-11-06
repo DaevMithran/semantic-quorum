@@ -218,9 +218,9 @@ export default function AgentTown() {
 									aria-label="Leave replay"
 									title="Leave replay"
 									onClick={() => {
-										if (jobId) {
+									if (s.jobId) {
 											setReplaying(false)
-											go(`job=${jobId}`)
+										go(`deal=${s.jobId}`)
 										} else window.location.assign(window.location.pathname)
 									}}
 								>
@@ -228,7 +228,7 @@ export default function AgentTown() {
 								</button>
 							</>
 						) : (
-							<button type="button" className="ghost back-icon" aria-label="Back to marketplace" title="Back to marketplace" onClick={() => window.location.assign(window.location.pathname)}>
+							<button type="button" className="ghost back-icon" aria-label="Back to deal" title="Back to deal" onClick={() => jobId ? go(`deal=${jobId}`) : window.location.assign(window.location.pathname)}>
 								<ArrowLeft size={17} />
 							</button>
 						)}

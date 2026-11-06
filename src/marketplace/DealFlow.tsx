@@ -22,8 +22,8 @@ async function jsonPost<T>(path: string, body: unknown): Promise<T> {
 	return payload
 }
 
-export function DealFlow({ initialTask, initialSellerId, resumeJobId, onBack, onOpenLive }: { initialTask: string; initialSellerId?: string; resumeJobId?: string; onBack: () => void; onOpenLive: (jobId: string) => void }) {
-	const [step, setStep] = useState(resumeJobId ? 5 : 1)
+export function DealFlow({ initialTask, initialSellerId, resumeJobId, liveJobId, onBack, onOpenLive }: { initialTask: string; initialSellerId?: string; resumeJobId?: string; liveJobId?: string; onBack: () => void; onOpenLive: (jobId: string) => void }) {
+	const [step, setStep] = useState(liveJobId ? 6 : resumeJobId ? 5 : 1)
 	const [task, setTask] = useState(initialTask)
 	const [sellerId, setSellerId] = useState(initialSellerId ?? '')
 	const [policy, setPolicy] = useState<Policy>()
@@ -34,7 +34,7 @@ export function DealFlow({ initialTask, initialSellerId, resumeJobId, onBack, on
 	const [funding, setFunding] = useState(false)
 	const [fundEvent, setFundStatus] = useState('')
 	const fundStatus = funding ? 'Processing…' : fundEvent
-	const [jobId, setJobId] = useState<string>()
+	const [jobId, setJobId] = useState<string | undefined>(liveJobId)
 	const [error, setError] = useState<string>()
 	const [draftNotice, setDraftNotice] = useState<string>()
 	const { address, isConnected, chainId, connector } = useAccount()

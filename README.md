@@ -13,7 +13,21 @@ on 0G before payment, and when the work falls short the agent gets precise fixes
 
 Built with [Arc Studio](https://studio.arc.io).
 
-**Arc testnet:** `SQController` at [`0x1f772f6a7764c227FCb9467E0E60D133C3CdA168`](https://explorer.testnet.arc.io/address/0x1f772f6a7764c227FCb9467E0E60D133C3CdA168).
+## Arc testnet deployment
+
+Chain ID: `5042002` · [Explorer](https://explorer.testnet.arc.io) · RPC: `https://rpc.testnet.arc.io`
+
+| Contract | Address |
+|---|---|
+| SQController | [`0x1f772f6a7764c227FCb9467E0E60D133C3CdA168`](https://explorer.testnet.arc.io/address/0x1f772f6a7764c227FCb9467E0E60D133C3CdA168) |
+| AgenticCommerce (ERC-8183) | [`0x0747EEf0706327138c69792bF28Cd525089e4583`](https://explorer.testnet.arc.io/address/0x0747EEf0706327138c69792bF28Cd525089e4583) |
+| USDC | [`0x3600000000000000000000000000000000000000`](https://explorer.testnet.arc.io/address/0x3600000000000000000000000000000000000000) |
+| CRE simulation forwarder | [`0x6E9EE680ef59ef64Aa8C7371279c27E496b5eDc1`](https://explorer.testnet.arc.io/address/0x6E9EE680ef59ef64Aa8C7371279c27E496b5eDc1) |
+| CRE production forwarder | [`0x76c9cf548b4179F8901cda1f8623568b58215E62`](https://explorer.testnet.arc.io/address/0x76c9cf548b4179F8901cda1f8623568b58215E62) |
+
+SQController deployment transaction: [`0x04e5b9c9f00d25f31027c2a7c32ed6bee0c9e8aba24157927b09a60351094fee`](https://explorer.testnet.arc.io/tx/0x04e5b9c9f00d25f31027c2a7c32ed6bee0c9e8aba24157927b09a60351094fee).
+
+The canonical deployment metadata, constructor arguments and deployment transaction are in [`deployments/arc-testnet.json`](deployments/arc-testnet.json).
 
 ## Repo layout
 

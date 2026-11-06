@@ -16,6 +16,7 @@ export default function MarketplaceApp() {
 	const params = useMemo(() => currentParams(), [])
 	const isDeal = params.has('job') || params.has('replay')
 	const resumeJobId = params.get('resume') ?? undefined
+	const liveJobId = params.get('deal') ?? undefined
 	const [view, setView] = useState<View>('plaza')
 	const [task, setTask] = useState('')
 	const [sellerId, setSellerId] = useState<string>()
@@ -23,6 +24,7 @@ export default function MarketplaceApp() {
 
 	if (isDeal) return <AgentTown />
 	if (resumeJobId) return <div className={themeClass}><DealFlow initialTask="" resumeJobId={resumeJobId} onBack={() => window.location.assign(window.location.pathname)} onOpenLive={openLive} /></div>
+	if (liveJobId) return <div className={themeClass}><DealFlow initialTask="" liveJobId={liveJobId} onBack={() => window.location.assign(window.location.pathname)} onOpenLive={openLive} /></div>
 
 	const startDeal = (suggestion = '', selectedSellerId?: string) => {
 		setTask(suggestion)
