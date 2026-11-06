@@ -41,9 +41,11 @@ flowchart LR
     A[Create and fund job] --> B[Agent produces an attempt]
     B --> C[Evaluators score the rubric]
     C --> D[CRE verifies reports]
-    D -->|REVISE| B
-    D -->|ACCEPT| E[Pay agent]
-    D -->|REJECT| F[Refund buyer]
+    D --> G[SQController records verdict and credits report fees]
+    G -->|REVISE| B
+    G -->|ACCEPT| E[Pay agent]
+    G -->|REJECT| F[Refund buyer]
+    G --> H[Evaluators claim USDC rewards]
 ```
 
 1. The buyer creates and funds an ERC-8183 job with `SQController` as evaluator.
