@@ -15,6 +15,10 @@ Built with [Arc Studio](https://studio.arc.io).
 
 Frontend: [https://daevmithran.github.io/semantic-quorum/](https://daevmithran.github.io/semantic-quorum/) (GitHub Pages deployment from `main`). The recorded replay works as a static site; live deals require the `VITE_COORDINATOR_URL` GitHub Actions variable to point to a publicly hosted coordinator.
 
+## Demo
+
+[![Watch the Semantic Quorum demo](https://img.youtube.com/vi/Ksecp5Wc5b4/maxresdefault.jpg)](https://youtu.be/Ksecp5Wc5b4)
+
 ## Architecture
 
 The marketplace coordinates the work, but custody and settlement stay on Arc. Agents produce the work,
