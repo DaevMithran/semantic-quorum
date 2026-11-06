@@ -7,6 +7,7 @@ import { useAccount, useDisconnect, useSendTransaction, useSwitchChain } from 'w
 import { lintCriterion, LIMITS } from '../town/lint'
 import { COORDINATOR } from '../town/sources'
 import type { Criterion, Policy } from '../town/types'
+import { DEFAULT_AGENT_TASKS } from './agentTasks'
 
 type Call = { label: string; to: Address; data: Hex; value: string }
 type Judge = { evaluatorId: string; profileId: string; model: string; provider?: '0g' | 'jev'; name?: string; description?: string; defaultSelected?: boolean; reportKey?: string; feeRecipient?: string }
@@ -25,6 +26,7 @@ async function jsonPost<T>(path: string, body: unknown): Promise<T> {
 export function DealFlow({ initialTask, initialSellerId, resumeJobId, liveJobId, onBack, onOpenLive }: { initialTask: string; initialSellerId?: string; resumeJobId?: string; liveJobId?: string; onBack: () => void; onOpenLive: (jobId: string) => void }) {
 	const [step, setStep] = useState(liveJobId ? 6 : resumeJobId ? 5 : 1)
 	const [task, setTask] = useState(initialTask)
+	const [taskCustomized, setTaskCustomized] = useState(false)
 	const [sellerId, setSellerId] = useState(initialSellerId ?? '')
 	const [policy, setPolicy] = useState<Policy>()
 	const [catalog, setCatalog] = useState<Catalog>()
@@ -86,6 +88,10 @@ export function DealFlow({ initialTask, initialSellerId, resumeJobId, liveJobId,
 
 	const criteria = policy?.criteria ?? []
 	const feeEstimate = useMemo(() => ((policy?.revisionLimit ?? 2) + 1) * evaluatorIds.length * 0.01, [policy?.revisionLimit, evaluatorIds.length])
+	const selectSeller = (id: string) => {
+		setSellerId(id)
+		if (!taskCustomized) setTask(DEFAULT_AGENT_TASKS[id] ?? '')
+	}
 
 	const draftRubric = async () => {
 		if (task.trim().length < 3) return
@@ -215,8 +221,8 @@ export function DealFlow({ initialTask, initialSellerId, resumeJobId, liveJobId,
 
 			<div className="flow-layout">
 				<section className="flow-panel">
-					{step === 1 && <AgentStep sellers={catalog?.sellers ?? []} selected={sellerId} onSelect={setSellerId} />}
-					{step === 2 && <DescribeStep task={task} setTask={setTask} budget={budget} setBudget={setBudget} />}
+					{step === 1 && <AgentStep sellers={catalog?.sellers ?? []} selected={sellerId} onSelect={selectSeller} />}
+					{step === 2 && <DescribeStep task={task} setTask={(value) => { setTask(value); setTaskCustomized(true) }} budget={budget} setBudget={setBudget} />}
 					{step === 3 && policy && <RubricStep policy={policy} notice={draftNotice} setPolicy={setPolicy} updateCriterion={updateCriterion} removeCriterion={removeCriterion} addCriterion={addCriterion} />}
 					{step === 4 && <EvaluatorsStep judges={catalog?.judges ?? []} selected={evaluatorIds} onChange={setEvaluatorIds} />}
 					{step === 5 && resumeJobId ? <ResumeStep jobId={resumeJobId} /> : step === 5 && policy && <ReviewStep task={task} policy={policy} budget={budget} feeEstimate={feeEstimate} seller={catalog?.sellers.find((seller) => seller.id === sellerId)} judges={(catalog?.judges ?? []).filter((judge) => evaluatorIds.includes(judge.evaluatorId))} />}

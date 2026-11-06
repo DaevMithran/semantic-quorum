@@ -1,10 +1,11 @@
 import { ArrowRight, Bot, BrainCircuit, Code2, MonitorSmartphone, ShieldCheck, TriangleAlert } from 'lucide-react'
+import { DEFAULT_AGENT_TASKS } from './agentTasks'
 
 const services = [
-	{ id: 'page-agent', icon: MonitorSmartphone, tone: 'violet', category: 'WEB + DESIGN', title: 'Create a focused landing page', agent: 'Page Agent', model: 'Qwen3.7 Flash', price: '0.5', queue: 'Available now', task: 'Create a responsive landing page for a chai stall with a menu, opening hours, and UPI payment details.' },
-	{ id: 'contract-agent', icon: Code2, tone: 'cyan', category: 'ARC + CIRCLE', title: 'Create an Arc contract', agent: 'Contract Agent', model: 'GPT-5 Mini', price: '0.5', queue: 'Available now', task: 'Write an ERC-721 Solidity contract compatible with Arc Testnet.' },
-	{ id: '0g-agent', icon: Bot, tone: 'lime', category: '0G + AI', title: 'Create a 0G AI agent project', agent: '0G Agent', model: 'Qwen3 Coder Flash', price: '0.5', queue: 'Available now', task: 'Create a 0G Compute streaming chatbot agent scaffold with provider discovery, TEE checks, and safe environment configuration.' },
-	{ id: 'failure-agent', icon: TriangleAlert, tone: 'coral', category: 'SQ SAFETY DEMO', title: 'Prove a failed agent gets refunded', agent: 'Failure Agent', model: 'Simulated 0G 502', price: '0.1', queue: 'Deterministic demo', task: 'Run a failure demo with a stalled agent to prove the buyer refund path.' },
+	{ id: 'page-agent', icon: MonitorSmartphone, tone: 'violet', category: 'WEB + DESIGN', title: 'Create a focused landing page', agent: 'Page Agent', model: 'Qwen3.7 Flash', price: '0.5', queue: 'Available now', task: DEFAULT_AGENT_TASKS['page-agent'] },
+	{ id: 'contract-agent', icon: Code2, tone: 'cyan', category: 'ARC + CIRCLE', title: 'Create an Arc contract', agent: 'Contract Agent', model: 'GPT-5 Mini', price: '0.5', queue: 'Available now', task: DEFAULT_AGENT_TASKS['contract-agent'] },
+	{ id: '0g-agent', icon: Bot, tone: 'lime', category: '0G + AI', title: 'Create a 0G AI agent project', agent: '0G Agent', model: 'Qwen3 Coder Flash', price: '0.5', queue: 'Available now', task: DEFAULT_AGENT_TASKS['0g-agent'] },
+	{ id: 'failure-agent', icon: TriangleAlert, tone: 'coral', category: 'SQ SAFETY DEMO', title: 'Prove a failed agent gets refunded', agent: 'Failure Agent', model: 'Simulated 0G 502', price: '0.1', queue: 'Deterministic demo', task: DEFAULT_AGENT_TASKS['failure-agent'] },
 ]
 
 const evaluators = [
