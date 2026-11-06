@@ -13,6 +13,8 @@ on 0G before payment, and when the work falls short the agent gets precise fixes
 
 Built with [Arc Studio](https://studio.arc.io).
 
+Frontend: [https://daevmithran.github.io/semantic-quorum/](https://daevmithran.github.io/semantic-quorum/) (GitHub Pages deployment from `main`). The recorded replay works as a static site; live deals require the `VITE_COORDINATOR_URL` GitHub Actions variable to point to a publicly hosted coordinator.
+
 ## Arc testnet deployment
 
 Chain ID: `5042002` · [Explorer](https://explorer.testnet.arc.io) · RPC: `https://rpc.testnet.arc.io`

@@ -4,6 +4,7 @@ import path from 'path'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [react(), nodePolyfills()],
   resolve: {
     alias: {
