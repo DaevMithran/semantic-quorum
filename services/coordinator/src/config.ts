@@ -71,8 +71,9 @@ export const loadConfig = (env: Record<string, string | undefined> = process.env
 	const evaluators = z.record(z.string().url()).parse(JSON.parse(e.EVALUATORS))
 	const configuredSellerDirs = z.record(z.string().min(1)).parse(JSON.parse(e.SELLER_DIRS))
 	const k = readEnvFile(e.ARC_KEYS_FILE)
-	if (e.RELAY_ENABLED && (!/^0x[0-9a-fA-F]{40}$/.test(e.SQ_CONTROLLER_ADDRESS) || !/^0x[0-9a-fA-F]{64}$/.test(e.RELAY_PRIVATE_KEY))) {
-		throw new Error('RELAY_ENABLED needs SQ_CONTROLLER_ADDRESS and RELAY_PRIVATE_KEY')
+	const relayKey = e.RELAY_PRIVATE_KEY || k.SELLER_KEY
+	if (e.RELAY_ENABLED && (!/^0x[0-9a-fA-F]{40}$/.test(e.SQ_CONTROLLER_ADDRESS) || !/^0x[0-9a-fA-F]{64}$/.test(relayKey ?? ''))) {
+		throw new Error('RELAY_ENABLED needs SQ_CONTROLLER_ADDRESS and a relay payer key (RELAY_PRIVATE_KEY or ARC_KEYS_FILE SELLER_KEY)')
 	}
 	return {
 		host: e.HOST,
@@ -86,7 +87,7 @@ export const loadConfig = (env: Record<string, string | undefined> = process.env
 			enabled: e.RELAY_ENABLED,
 			rpcUrl: e.ARC_RPC_URL,
 			controller: e.SQ_CONTROLLER_ADDRESS ? (e.SQ_CONTROLLER_ADDRESS as Address) : undefined,
-			key: e.RELAY_PRIVATE_KEY ? (e.RELAY_PRIVATE_KEY as Hex) : undefined,
+			key: relayKey && isKey(relayKey) ? relayKey : undefined,
 		},
 		agentsFile: e.AGENTS_FILE,
 		rubric: routerKey ? { baseUrl: e.OG_BASE_URL.replace(/\/$/, ''), apiKey: routerKey, model: e.RUBRIC_MODEL, trustMode: e.OG_STANDARD_API_KEY ? '' : 'private' } : undefined,

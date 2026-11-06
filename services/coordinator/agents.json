@@ -12,7 +12,7 @@
       "id": "contract-agent",
       "ens": "contract.agent.semanticquorum.eth",
       "name": "Contract Agent",
-      "model": "qwen3-coder-flash",
+      "model": "gpt-5-mini",
       "runtime": "0G Compute Router",
       "skills": ["smart contract", "solidity", "erc-20", "erc20", "erc-721", "erc721", "erc-1155", "erc1155", "airdrop", "circle contract", "arc contract"]
     },

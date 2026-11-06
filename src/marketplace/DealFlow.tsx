@@ -59,17 +59,24 @@ export function DealFlow({ initialTask, initialSellerId, resumeJobId, onBack, on
 
 	useEffect(() => {
 		if (catalog) return
-		fetch(`${COORDINATOR}/agents`)
+		let stopped = false
+		let retry: ReturnType<typeof setTimeout> | undefined
+		const load = () => fetch(`${COORDINATOR}/agents`)
 			.then(async (response) => {
 				if (!response.ok) throw new Error('catalog unavailable')
 				const next = (await response.json()) as Catalog
+				if (stopped) return
 				setCatalog(next)
 				setEvaluatorIds((current) => current.length ? current : next.judges.filter((judge) => judge.defaultSelected ?? judge.provider !== 'jev').map((judge) => judge.evaluatorId))
 			})
-			.catch(() => setCatalog({ sellers: [], judges: [
-				{ evaluatorId: 'laya', profileId: '0g-laya-teeml-v1', model: 'laya', provider: '0g', defaultSelected: true },
-				{ evaluatorId: 'vela', profileId: '0g-vela-teeml-v1', model: 'vela-2.0-9b', provider: '0g', defaultSelected: true },
-			] }))
+			.catch(() => {
+				if (!stopped) retry = setTimeout(load, 1_500)
+			})
+		void load()
+		return () => {
+			stopped = true
+			if (retry) clearTimeout(retry)
+		}
 	}, [catalog])
 
 	useEffect(() => {
