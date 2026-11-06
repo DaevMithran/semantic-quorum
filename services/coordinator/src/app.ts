@@ -86,7 +86,7 @@ export const makeApp = (board: Board, events: Events, rounds: ReturnType<typeof 
 				}
 			}
 			// --- deals funded from the buyer's wallet (see services/coordinator/src/deals.ts) ---
-			const off = () => json({ error: 'deals need SQ_CONTROLLER_ADDRESS and the seller + verdict keys in .env.arc (run make arc-job once)' }, 503)
+			const off = () => json({ error: 'deals need SQ_CONTROLLER_ADDRESS plus SELLER_KEY and VERDICT_AUTHORITY_KEY (or a local ARC_KEYS_FILE)' }, 503)
 			if (req.method === 'POST' && p === '/deals/prepare') {
 				if (!x.deals || !x.catalog) return off()
 				const r = prepareSchema.parse(body) as unknown as PrepareRequest

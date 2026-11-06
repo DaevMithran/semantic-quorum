@@ -79,4 +79,4 @@ console.log(`  CRE: ${cfg.cre.bin} --target ${cfg.cre.target}${cfg.cre.broadcast
 console.log(`  relay: ${relay ? `on -> ${cfg.relay.controller}` : 'off'}`)
 console.log(`  agents: ${catalog.sellers.map((s) => s.ens).join(', ')} | judges: ${catalog.judges.map((j) => j.evaluatorId).join(', ')}`)
 console.log(`  rubric drafting: ${draft ? `on (${fallbackCfg?.model ?? 'disabled'} on OpenRouter${rubricCfg ? ` -> ${rubricCfg.model} on 0G fallback` : ''})` : 'off (set OPENROUTER_API_KEY or OG_API_KEY)'}`)
-console.log(`  deals: ${dc ? `on, funded from the buyer's wallet (seller agent ${privateKeyToAccount(dc.sellerKey).address})` : 'off (needs .env.arc from make arc-job and SQ_CONTROLLER_ADDRESS)'}`)
+console.log(`  deals: ${dc ? `on, funded from the buyer's wallet (seller agent ${privateKeyToAccount(dc.sellerKey).address})` : 'off (needs SQ_CONTROLLER_ADDRESS plus seller and verdict authority keys)'}`)

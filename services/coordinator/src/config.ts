@@ -29,7 +29,10 @@ const schema = z.object({
 	OPENROUTER_API_KEY: z.string().default(''),
 	OPENROUTER_BASE_URL: z.string().url().default('https://openrouter.ai/api'),
 	OPENROUTER_MODEL: z.string().default('openai/gpt-4.1-nano'),
-	ARC_KEYS_FILE: z.string().default('../../.env.arc'), // SELLER_KEY (hosted seller agent) + VERDICT_AUTHORITY_KEY (make arc-job)
+	// Railway/hosted deployments provide these directly. ARC_KEYS_FILE remains the local fallback.
+	SELLER_KEY: z.string().default(''),
+	VERDICT_AUTHORITY_KEY: z.string().default(''),
+	ARC_KEYS_FILE: z.string().default('../../.env.arc'),
 	ARC_CHAIN_ID: z.coerce.number().int().default(5042002),
 	AGENTIC_COMMERCE_ADDRESS: z.string().default('0x0747EEf0706327138c69792bF28Cd525089e4583'),
 	USDC_ADDRESS: z.string().default('0x3600000000000000000000000000000000000000'),
@@ -71,9 +74,11 @@ export const loadConfig = (env: Record<string, string | undefined> = process.env
 	const evaluators = z.record(z.string().url()).parse(JSON.parse(e.EVALUATORS))
 	const configuredSellerDirs = z.record(z.string().min(1)).parse(JSON.parse(e.SELLER_DIRS))
 	const k = readEnvFile(e.ARC_KEYS_FILE)
-	const relayKey = e.RELAY_PRIVATE_KEY || k.SELLER_KEY
+	const sellerKey = e.SELLER_KEY || k.SELLER_KEY
+	const verdictAuthorityKey = e.VERDICT_AUTHORITY_KEY || k.VERDICT_AUTHORITY_KEY
+	const relayKey = e.RELAY_PRIVATE_KEY || sellerKey
 	if (e.RELAY_ENABLED && (!/^0x[0-9a-fA-F]{40}$/.test(e.SQ_CONTROLLER_ADDRESS) || !/^0x[0-9a-fA-F]{64}$/.test(relayKey ?? ''))) {
-		throw new Error('RELAY_ENABLED needs SQ_CONTROLLER_ADDRESS and a relay payer key (RELAY_PRIVATE_KEY or ARC_KEYS_FILE SELLER_KEY)')
+		throw new Error('RELAY_ENABLED needs SQ_CONTROLLER_ADDRESS and a relay payer key (RELAY_PRIVATE_KEY or SELLER_KEY)')
 	}
 	return {
 		host: e.HOST,
@@ -93,15 +98,15 @@ export const loadConfig = (env: Record<string, string | undefined> = process.env
 		rubric: routerKey ? { baseUrl: e.OG_BASE_URL.replace(/\/$/, ''), apiKey: routerKey, model: e.RUBRIC_MODEL, trustMode: e.OG_STANDARD_API_KEY ? '' : 'private' } : undefined,
 		rubricFallback: e.OPENROUTER_API_KEY ? { baseUrl: e.OPENROUTER_BASE_URL.replace(/\/$/, ''), apiKey: e.OPENROUTER_API_KEY, model: e.OPENROUTER_MODEL, trustMode: '', providerName: 'OpenRouter' } : undefined,
 		deals:
-			isKey(k.SELLER_KEY) && isKey(k.VERDICT_AUTHORITY_KEY) && /^0x[0-9a-fA-F]{40}$/.test(e.SQ_CONTROLLER_ADDRESS)
+			isKey(sellerKey) && isKey(verdictAuthorityKey) && /^0x[0-9a-fA-F]{40}$/.test(e.SQ_CONTROLLER_ADDRESS)
 				? {
 						rpcUrl: e.ARC_RPC_URL,
 						chainId: e.ARC_CHAIN_ID,
 						kernel: e.AGENTIC_COMMERCE_ADDRESS as Address,
 						usdc: e.USDC_ADDRESS as Address,
 						controller: e.SQ_CONTROLLER_ADDRESS as Address,
-						sellerKey: k.SELLER_KEY,
-						verdictAuthority: privateKeyToAccount(k.VERDICT_AUTHORITY_KEY).address,
+						sellerKey,
+						verdictAuthority: privateKeyToAccount(verdictAuthorityKey).address,
 					}
 				: undefined,
 		sellerDir: e.SELLER_DIR,
