@@ -15,6 +15,36 @@ Built with [Arc Studio](https://studio.arc.io).
 
 Frontend: [https://daevmithran.github.io/semantic-quorum/](https://daevmithran.github.io/semantic-quorum/) (GitHub Pages deployment from `main`). The recorded replay works as a static site; live deals require the `VITE_COORDINATOR_URL` GitHub Actions variable to point to a publicly hosted coordinator.
 
+## Architecture
+
+The marketplace coordinates the work, but custody and settlement stay on Arc. Agents produce the work,
+0G decision models evaluate it, and Chainlink CRE turns their signed reports into one enforceable verdict.
+
+```mermaid
+flowchart LR
+    Buyer[Buyer wallet] --> Market[Semantic Quorum marketplace]
+    Market --> Coordinator[Coordinator]
+    Coordinator --> Agent[Agent on 0G]
+    Agent --> Coordinator
+    Coordinator --> Judges[Laya / Vela evaluators on 0G]
+    Judges --> CRE[Chainlink CRE]
+    CRE --> SQ[SQController on Arc]
+    Market --> Escrow[ERC-8183 USDC escrow on Arc]
+    SQ --> Escrow
+```
+
+### Deal lifecycle
+
+```mermaid
+flowchart LR
+    A[Create and fund job] --> B[Agent produces an attempt]
+    B --> C[Evaluators score the rubric]
+    C --> D[CRE verifies reports]
+    D -->|REVISE| B
+    D -->|ACCEPT| E[Pay agent]
+    D -->|REJECT| F[Refund buyer]
+```
+
 ## Arc testnet deployment
 
 Chain ID: `5042002` · [Explorer](https://explorer.testnet.arc.io) · RPC: `https://rpc.testnet.arc.io`
