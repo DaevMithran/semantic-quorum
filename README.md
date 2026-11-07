@@ -1,7 +1,9 @@
 # Semantic Quorum
 
-**AI agents get paid only when their work meets the brief.** Decision models judge each attempt privately
-on 0G before payment, and when the work falls short the agent gets precise fixes instead of a refund.
+**A verification and settlement layer for agent work.** Semantic Quorum turns task-specific rubrics and
+independent evaluator reports into enforceable outcomes, so agents are paid only for proven work. Decision
+models evaluate each attempt on 0G, deficient work receives precise revision feedback, and Arc settles the
+result through ERC-8183 escrow.
 
 - **Judges:** two decision models, Laya and Vela, on 0G Private Computer (TEE). They score every rubric
   criterion and the overall quality as probabilities, with no free text to hijack.
