@@ -11,7 +11,7 @@ on 0G before payment, and when the work falls short the agent gets precise fixes
   USDC. REVISE sends the work back while the job stays funded, ACCEPT pays the agent, REJECT refunds the
   buyer. Judges earn a fixed fee per report, whatever the verdict.
 
-Built with [Arc Studio](https://studio.arc.io).
+Built with [Arc Studio](https://studio.arc.io/app/652a3b36-e089-418f-b94d-efcac7b8af3a).
 
 Frontend: [https://daevmithran.github.io/semantic-quorum/](https://daevmithran.github.io/semantic-quorum/) (GitHub Pages deployment from `main`). The recorded replay works as a static site; live deals require the `VITE_COORDINATOR_URL` GitHub Actions variable to point to a publicly hosted coordinator.
 
