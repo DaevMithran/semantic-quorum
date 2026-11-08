@@ -21,6 +21,10 @@ Frontend: [https://daevmithran.github.io/semantic-quorum/](https://daevmithran.g
 
 [![Watch the Semantic Quorum demo](https://img.youtube.com/vi/Ksecp5Wc5b4/maxresdefault.jpg)](https://youtu.be/Ksecp5Wc5b4)
 
+## Presentation
+
+[View the Semantic Quorum slides](docs/Semantic-Quorum-Slides.pdf)
+
 ## Architecture
 
 The marketplace coordinates the work, but custody and settlement stay on Arc. Agents produce the work,
